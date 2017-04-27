@@ -1,10 +1,13 @@
 #include "RotationLibrary.h"
 
+int original_boundary_height = 0;
+int original_boundary_width = 0;
+
 
 #pragma region  function preparation
 
 bool IsInTheBoundary(int i, int j) {
-	if (i < 0 || i >= IMAGE_HEIGHT || j < 0 || j >= IMAGE_WIDTH)
+	if (i < 0 || i >= original_boundary_height || j < 0 || j >= original_boundary_width)
 		return false;
 	else
 		return true;
@@ -13,10 +16,10 @@ bool IsInTheBoundary(int i, int j) {
 void HandleExceedBoundaryPosition(int &i, int &j)
 {
 	i = std::max(0, i);
-	i = std::min(i,IMAGE_HEIGHT-1);
+	i = std::min(i, original_boundary_height -1);
 
 	j = std::max(0,j);
-	j = std::min(j,IMAGE_WIDTH-1);
+	j = std::min(j, original_boundary_width-1);
 }
 
 
@@ -32,17 +35,32 @@ cv::Mat GetOriginalMappingPosition(int x, int y, cv::Mat rotated_matrix, cv::Mat
 #pragma endregion
 
 
+void DoImagePadding(int & height, int & width) {
+
+	MathType norm = sqrt(height*height + width * width);
+	MathType short_edge = std::min(height, width);
+	height = ceil(norm/ short_edge * height);
+	width = ceil(norm / short_edge * width);
+}
+
 cv::Mat	RotateImage(cv::Mat original, MathType angle, FuncType type) {
 
 	angle = -angle / 180.0 * PI;
 
-	cv::Mat rotated_image(IMAGE_HEIGHT, IMAGE_WIDTH ,IMAGE_TYPE);
+	//Image Padding Part
+	int rotated_image_hegiht = original_boundary_height;
+	int rotated_image_width = original_boundary_width;
+	DoImagePadding(rotated_image_hegiht, rotated_image_width);
+
+
+	cv::Mat rotated_image;
+	rotated_image.create(rotated_image_hegiht, rotated_image_width, IMAGE_TYPE);
 
 	cv::Mat rotated_matrix = (cv::Mat_<MathType>(2, 2) << cos(angle), -sin(angle), sin(angle), cos(angle));
 
-	cv::Mat original_center = (cv::Mat_<MathType>(2, 1) << IMAGE_HEIGHT / 2,  IMAGE_WIDTH / 2);
+	cv::Mat original_center = (cv::Mat_<MathType>(2, 1) << original_boundary_height / 2, original_boundary_width / 2);
 	original_center = rotated_matrix * original_center;
-	cv::Mat center_vector = (cv::Mat_<MathType>(2, 1) << (IMAGE_HEIGHT / 2 - original_center.at<MathType>(0, 0)), (IMAGE_WIDTH / 2 - original_center.at<MathType>(1, 0)));
+	cv::Mat center_vector = (cv::Mat_<MathType>(2, 1) << (rotated_image_hegiht / 2 - original_center.at<MathType>(0, 0)), (rotated_image_width / 2 - original_center.at<MathType>(1, 0)));
 
 	rotated_matrix = (cv::Mat_<MathType>(2, 2) << cos(angle), sin(angle), -sin(angle), cos(angle));
 
@@ -105,7 +123,7 @@ cv::Vec3b GetColorBilinear(cv::Mat original_image, cv::Mat mapping_position)
 	HandleExceedBoundaryPosition(x1,y1);
 	HandleExceedBoundaryPosition(x2,y2);
 
-	cv::Mat color(1, 1, CV_8UC3);
+	cv::Mat color(1, 1, IMAGE_TYPE);
 	for (int k = 0; k < 3; k++)
 	{
 		MathType R1 = GetLinearInterpolationValue(x1,x2, i, original_image.at<cv::Vec3b>(x1, y1)[k], original_image.at<cv::Vec3b>(x2, y1)[k]);
