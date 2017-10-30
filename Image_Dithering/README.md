@@ -51,8 +51,8 @@ Image02-algorithm 02 modified-2
 ### Part 2 - Discussion About Results
 
 We can see that:
-1. Algorithm 02 has a better effect.
-Two source images are horror pictures. Algorithm 02 keeps the feeling of horror, however, algorithm 01 loses it, just like an emoticon.
+1. Algorithm 02 has a better effect.  
+Two source images are horror pictures. In image 02, algorithm 02 keeps the feeling of horror, however, algorithm 01 loses it, just like an emoticon.
 
 2. The ordered values of the Dither Matrix seems to make the picture plumper.  
 Value arrangement does influence the result, but not a lot.
