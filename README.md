@@ -4,7 +4,12 @@ Some Programming Practices
 
 ===============================================
 ## Markdown Commands Practice
-> try something
+> try something  
+> try something new
+  try something different  
+  -- make newline：two [ blank space ] at the end of the line
+
+
 
 [Markdown Manual](https://guides.github.com/features/mastering-markdown/)
 
