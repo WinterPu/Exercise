@@ -23,14 +23,19 @@ int main() {
 	cv::Mat dithered_image_02 = GenerateDitheredImage_A2(gray_level_image);
 
 	cv::imwrite(path_name + "Gray Level Image " +image_name, gray_level_image);
-	cv::imwrite(path_name + "Dithered Image 01 " + image_name, dithered_image_01);
-	cv::imwrite(path_name + "Dithered Image 02 " + image_name, dithered_image_02);
-	
+
 	cv::imshow("Original Image", original_image);
 	cv::imshow("Gray Level", gray_level_image);
-	cv::imshow("Dithered Image01", dithered_image_01);
-	cv::imshow("Dithered Image02", dithered_image_02);
 
+#if MODIFY_FLAG
+	cv::imwrite(path_name + "Dithered Image modified 01 " + image_name, dithered_image_01);
+	cv::imwrite(path_name + "Dithered Image modified 02 " + image_name, dithered_image_02);
+#else
+	cv::imwrite(path_name + "Dithered Image 01 " + image_name, dithered_image_01);
+	cv::imwrite(path_name + "Dithered Image 02 " + image_name, dithered_image_02);
+#endif
+	cv::imshow("Dithered Image 01", dithered_image_01);
+	cv::imshow("Dithered Image 02", dithered_image_02);
 
 	//follow imshow to give time to show an image
 	cv::waitKey();

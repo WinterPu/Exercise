@@ -18,6 +18,10 @@ extern int order[4][2];
 #define N 4
 extern int order_matrix[4][4];
 
+//whether modify the arrangement of the values in the Dither Matrix 
+#define MODIFY_FLAG 1
+
+
 cv::Mat GenerateGrayLevelImage(cv::Mat original_image);
 cv::Mat GenerateDitheredImage_A1(cv::Mat gray_level_image);
 cv::Mat GenerateDitheredImage_A2(cv::Mat gray_level_image);

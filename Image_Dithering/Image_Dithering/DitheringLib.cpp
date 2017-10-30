@@ -1,7 +1,16 @@
 #include "DitheringLib.h"
 
 int order[4][2] = { { 0,0 },{ 1,1 },{ 0,1},{ 1,0} };
+
+#if MODIFY_FLAG
+//-- modified-1
+//int order_matrix[4][4] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 };
+//-- modified-2
+int order_matrix[4][4] = { 15,7,6,11,2,4,13,9,0,12,1,5,8,3,10,14};
+#else 
 int order_matrix[4][4] = { 0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5 };
+#endif
+
 cv::Mat GenerateGrayLevelImage(cv::Mat original_image) {
 
 	cv::Mat gray_level_image(original_image.rows,original_image.cols,CV_8UC1);
