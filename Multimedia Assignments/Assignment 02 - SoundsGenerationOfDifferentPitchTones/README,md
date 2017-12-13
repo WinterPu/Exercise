@@ -1,4 +1,4 @@
-The format you design for the input text file of musical notes.
+## The format you design for the input text file of musical notes.
 
 
 
@@ -34,21 +34,21 @@ for example:
 
 
 
-The ﬂowchart of your program
+## The ﬂowchart of your program
 
 
 
-The way to set up and run your program,
+## The way to set up and run your program,
+ 
+
+
+## The illustrations or figures to demonstrate the results produced by your program.
 
 
 
-The illustrations or figures to demonstrate the results produced by your program.
 
 
-
-
-
-The problem(s) encountered and the way you solve it(them), if any.
+## The problem(s) encountered and the way you solve it(them), if any.
 
 
 
@@ -58,7 +58,7 @@ It is a little troublesome in dealing with wav file's data part.
 
 
 
-The discussions/summaries on your results, and what you have learned in this assignment
+## The discussions/summaries on your results, and what you have learned in this assignment
 
 
 
