@@ -48,27 +48,27 @@ use whitespace-character to seperate two musical notes.
 ![UI](https://github.com/WinterPu/Exercise/blob/master/Multimedia%20Assignments/Assignment%2002%20-%20SoundsGenerationOfDifferentPitchTones/README_IMAGE/UI.png?raw=true)
 
 you can use following command:
-```
-**createwav [frequency value] [volume value] [duration value]**
-- to create wav file with specified - frequency , volume, duration
-etc: createwav 350 100 3
 
-**createsound**
-- to read your musical notes in your own file to generate the sound ( mix with two tones: basso & alto)
+>**createwav [frequency value] [volume value] [duration value]**
+>- to create wav file with specified - frequency , volume, duration
+><br></br>etc: createwav 350 100 3
 
-**setfm**
-- to enable simple fm function 
+>**createsound**
+>- to read your musical notes in your own file to generate the sound ( mix with two tones: basso & alto)
 
-**settone**
-- to set tone for basso & alto in [ sound generation ] process
+>**setfm**
+>- to enable simple fm function 
 
-**help**
-- to show the commands
+>**settone**
+>- to set tone for basso & alto in [ sound generation ] process
 
-**end**
-- to end the program
+>**help**
+>- to show the commands
 
-```
+>**end**
+>- to end the program
+
+
 ## The illustrations or figures to demonstrate the results produced by your program.
 
 Small Bee 
