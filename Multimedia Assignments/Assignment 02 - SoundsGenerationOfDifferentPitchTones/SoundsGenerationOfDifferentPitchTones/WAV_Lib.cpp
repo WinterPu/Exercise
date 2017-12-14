@@ -1,8 +1,10 @@
 #include "WAV_Lib.h"
 
+//static member definition
+bool  WavFile::fm_flag = FM_FLAG;
 
 WavFile::WavFile(int v_frequency, int v_volume, int v_durations) :
-	m_samplefreq(44100), m_channels(1),m_channelbits(8),frequency(v_frequency),volume(v_volume),durations(v_durations),fm_flag(FM_FLAG){
+	m_samplefreq(44100), m_channels(1),m_channelbits(8),frequency(v_frequency),volume(v_volume),durations(v_durations){
 
 	wave_header_length = sizeof(WaveHeader);
 	totalLen = (m_samplefreq * m_channels * m_channelbits / 8) * durations + wave_header_length;//文件总长度=(采样率 * 通道数 * 比特数 / 8) * 持续时间(s)
@@ -13,8 +15,9 @@ WavFile::WavFile(int v_frequency, int v_volume, int v_durations) :
 }
 
 WavFile::WavFile(int v_samplefreq, int v_channels, int v_channelbits, int v_frequency, int v_volume, int v_durations):
-	m_samplefreq(v_samplefreq), m_channels(v_channels), m_channelbits(v_channelbits),frequency(v_frequency), volume(v_volume), durations(v_durations),fm_flag(FM_FLAG){
+	m_samplefreq(v_samplefreq), m_channels(v_channels), m_channelbits(v_channelbits),frequency(v_frequency), volume(v_volume), durations(v_durations){
 	
+
 	wave_header_length = sizeof(WaveHeader);
 	totalLen = (m_samplefreq * m_channels * m_channelbits / 8) * durations + wave_header_length;//文件总长度=(采样率 * 通道数 * 比特数 / 8) * 持续时间(s)
 	wav_data_length = totalLen - wave_header_length;
@@ -26,7 +29,7 @@ void WavFile::CalcSampleFrequency()
 {
 	int len = m_samplefreq * durations;
 	for (int i = 0; i < len; i++)
-		vec_sample_freq.push_back(GenerationFunc(i, m_samplefreq, frequency, volume, fm_flag));
+		vec_sample_freq.push_back(GenerationFunc(i, m_samplefreq, frequency, volume, WavFile::GetFMFlag()));
 }
 
 void WavFile::MakeWaveData(WaveHeader*pHeader, char* pWaveBuffer)//采样率、频率、音量、采样点数

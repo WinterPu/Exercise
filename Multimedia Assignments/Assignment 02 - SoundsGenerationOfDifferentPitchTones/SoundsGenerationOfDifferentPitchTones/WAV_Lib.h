@@ -15,6 +15,7 @@
 #define MATH_PI 3.1415
 
 #define FM_FLAG 0
+
 double GenerationFunc(int times, int rate, int freq, int amp, bool fm_flag);
 
 
@@ -37,6 +38,7 @@ typedef struct
 class WavFile {
 
 public :
+	
 	WavFile(int v_frequency, int v_volume, int v_durations);
 	//samplefreq > 2 *frequency  according to the Nyquist - Shannon theorem
 	WavFile(int v_samplefreq, int v_channels, int v_channelbits, int v_frequency, int v_volume, int v_durations);
@@ -53,15 +55,15 @@ public :
 	int  GetDuration() { return durations; }
 	std::vector<double>* GetDataLinker() { return &vec_sample_freq;}
 	DWORD   GetDataLength() { return wav_data_length; }
-	DWORD    GetHeaderLength() { return wave_header_length; }
+	DWORD   GetHeaderLength() { return wave_header_length; }
 
-	bool SetFMFlag() { fm_flag = ~fm_flag; vec_sample_freq.clear(); CalcSampleFrequency(); }
-	bool SetFMFlag(bool value) { fm_flag = value; vec_sample_freq.clear(); CalcSampleFrequency(); }
+	static void SetFMFlag() { WavFile::fm_flag = ~WavFile::fm_flag; }
+	static void SetFMFlag(bool value) { WavFile::fm_flag = value; }
+	static bool GetFMFlag() { return fm_flag; }
 
 	~WavFile() {};
 private:
-	bool fm_flag;
-
+	static bool fm_flag;
 	int frequency; // sound frequency
 	int volume;
 	int durations;

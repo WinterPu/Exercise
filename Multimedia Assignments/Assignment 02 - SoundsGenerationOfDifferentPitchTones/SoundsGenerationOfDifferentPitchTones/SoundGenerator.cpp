@@ -39,11 +39,16 @@ void SoundGenerator::InitializeFreMap()
 }
 
 
-void SoundGenerator::ReadFromFile(std::string file_path)
+bool SoundGenerator::ReadFromFile(std::string file_path)
 {
 	// use each_note_duration (change use this->)
 	std::fstream stream_musical_notes(file_path);
 
+	if (!stream_musical_notes.is_open())
+	{
+		std::cout << "Fail to open input file." << std::endl;
+		return false;
+	}
 	std::string str;
 	while (stream_musical_notes >> str) {
 
@@ -111,6 +116,7 @@ void SoundGenerator::ReadFromFile(std::string file_path)
 			tone_duration += tmp_duration;
 		}
 	}
+	return true;
 
 
 }
@@ -237,14 +243,19 @@ void SoundGenerator::CreateSeperatePart()
 
 }
 
-void SoundGenerator::SynthesizeFromFile(std::string file_path, int val_basso_tone, int val_alto_tone)
+bool SoundGenerator::SynthesizeFromFile(std::string file_path, int val_basso_tone, int val_alto_tone)
 {
 	if (val_basso_tone != DEFAULT_BASSO_TONE || val_alto_tone != DEFAULT_ALTO_TONE)
 		SetToneNumber(val_basso_tone, val_alto_tone);
 
-	ReadFromFile(file_path);
-	CreateSeperatePart();
-	final_sound = SoundGenerator::Merge(basso_wave,alto_wave,delay_time);
+	if (ReadFromFile(file_path))
+	{
+		CreateSeperatePart();
+		final_sound = SoundGenerator::Merge(basso_wave, alto_wave, delay_time);
+		return true;
+	}
+	else
+		return false;
 }
 
 SoundGenerator::~SoundGenerator()

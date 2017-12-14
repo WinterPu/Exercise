@@ -66,7 +66,7 @@ public:
 	void InitializeFreMap();
 	
 	//rest note default duration is 1s
-	void ReadFromFile(std::string file_path);
+	bool ReadFromFile(std::string file_path);
 
 
 	static WavFile* Merge(WavFile* wav1, WavFile* wav2,int delay_time =0);//Mix wav1 with wav2
@@ -74,12 +74,13 @@ public:
 
 	void CreateSeperatePart();
 
-	void SynthesizeFromFile(std::string file_path,int val_basso_tone = DEFAULT_BASSO_TONE,int  val_alto_tone= DEFAULT_ALTO_TONE );
+	bool SynthesizeFromFile(std::string file_path,int val_basso_tone = DEFAULT_BASSO_TONE,int  val_alto_tone= DEFAULT_ALTO_TONE );
 
 	WavFile* GetFileLink() { return final_sound; }
 
 	void SetToneNumber(int basso_no = DEFAULT_BASSO_TONE, int alto_no= DEFAULT_ALTO_TONE) { basso_tone_number = basso_no; alto_tone_number = alto_no;  InitializeFreMap();}
-
+	int GetBassoToneNumber() { return basso_tone_number; }
+	int GetAltoToneNumber() { return alto_tone_number; }
 	~SoundGenerator();
 
 private:
