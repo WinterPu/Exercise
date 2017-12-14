@@ -9,6 +9,7 @@
 #include <string>
 #include <fstream> 
 #include <math.h>
+#include <vector>
 
 
 #define MATH_PI 3.1415
@@ -36,32 +37,38 @@ public :
 	WavFile(int v_samplefreq, int v_channels, int v_channelbits, int v_frequency, int v_volume, int v_durations);
 	
 
-	void CreateWaveHeader();
+	void CreateWaveHeader(WaveHeader*pHeader, char* pWaveBuffer);
 
-	~WavFile();
-	
 	//void MakeWaveData(int rate, int freq, int amp, char* p, int len);
-	void MakeWaveData(int rate, int freq, int amp, char * p, int len);
-	int CreateWavFile(std::string path, std::string file_name);
+	void CalcSampleFrequency();
+	void MakeWaveData(WaveHeader*pHeader, char* pWaveBuffer);
+	int CreateWavFile(std::string file_path);
 
 
 	int  GetDuration() { return durations; }
-	char* GetDataLinker() { return pWaveBuffer;}
-	int   GetDataLength() { return wav_data_length; }
-	int   GetHeaderLength() { return wave_header_length; }
+	std::vector<double>* GetDataLinker() { return &vec_sample_freq;}
+	DWORD   GetDataLength() { return wav_data_length; }
+	DWORD    GetHeaderLength() { return wave_header_length; }
+
+	bool SetFMFlag() { fm_flag = ~fm_flag; }
+	bool SetFMFlag(bool value) { fm_flag = value; }
+
+	~WavFile() {};
 private:
-	int frequency;
+	bool fm_flag;
+
+	int frequency; // sound frequency
 	int volume;
 	int durations;
 
-	WaveHeader * pHeader;
+	std::vector<double> vec_sample_freq;
+
+
 	DWORD totalLen;
-	char* pWaveBuffer;
-	int wave_header_length;
-	int wav_data_length;
+	DWORD wave_header_length;
+	DWORD wav_data_length;
 
-
-	int m_samplefreq;
+	int m_samplefreq; // sample rate
 	int m_channels;
 	int m_channelbits;
 };

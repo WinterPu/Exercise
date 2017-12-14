@@ -2,28 +2,34 @@
 
 
 WavFile::WavFile(int v_frequency, int v_volume, int v_durations) :
-	m_samplefreq(44100), m_channels(1),m_channelbits(8),frequency(v_frequency),volume(v_volume),durations(v_durations){
+	m_samplefreq(44100), m_channels(1),m_channelbits(8),frequency(v_frequency),volume(v_volume),durations(v_durations),fm_flag(FM_FLAG){
 
 	wave_header_length = sizeof(WaveHeader);
 	totalLen = (m_samplefreq * m_channels * m_channelbits / 8) * durations + wave_header_length;//文件总长度=(采样率 * 通道数 * 比特数 / 8) * 持续时间(s)
 	wav_data_length = totalLen - wave_header_length;
 
-	CreateWaveHeader();
-	MakeWaveData(pHeader->pwf.wf.nSamplesPerSec, frequency, volume, pWaveBuffer + wave_header_length, m_samplefreq*durations);//采样点数
+	CalcSampleFrequency();
+
 }
 
 WavFile::WavFile(int v_samplefreq, int v_channels, int v_channelbits, int v_frequency, int v_volume, int v_durations):
-	m_samplefreq(v_samplefreq), m_channels(v_channels), m_channelbits(v_channelbits),frequency(v_frequency), volume(v_volume), durations(v_durations){
+	m_samplefreq(v_samplefreq), m_channels(v_channels), m_channelbits(v_channelbits),frequency(v_frequency), volume(v_volume), durations(v_durations),fm_flag(FM_FLAG){
 	
 	wave_header_length = sizeof(WaveHeader);
 	totalLen = (m_samplefreq * m_channels * m_channelbits / 8) * durations + wave_header_length;//文件总长度=(采样率 * 通道数 * 比特数 / 8) * 持续时间(s)
 	wav_data_length = totalLen - wave_header_length;
-	CreateWaveHeader();
 
-	MakeWaveData(pHeader->pwf.wf.nSamplesPerSec, frequency, volume, pWaveBuffer + wave_header_length, m_samplefreq*durations);//采样点数
+	CalcSampleFrequency();
 }
 
-void WavFile::MakeWaveData(int rate, int freq, int amp, char*p, int len)//采样率、频率、音量、采样点数
+void WavFile::CalcSampleFrequency()
+{
+	int len = m_samplefreq * durations;
+	for (int i = 0; i < len; i++)
+		vec_sample_freq.push_back(GenerationFunc(i, m_samplefreq, frequency, volume, fm_flag));
+}
+
+void WavFile::MakeWaveData(WaveHeader*pHeader, char* pWaveBuffer)//采样率、频率、音量、采样点数
 {
 	//int flag = 0;
 	//if (m_channelbits == 16)        //16位
@@ -71,34 +77,38 @@ void WavFile::MakeWaveData(int rate, int freq, int amp, char*p, int len)//采样率
 	//		}
 	//	}
 	//}
-
+	CreateWaveHeader(pHeader, pWaveBuffer);
+	int len = m_samplefreq * durations;
 	for (int i = 0; i < len; i++)
 	{
-		*(p + i) = GenerationFunc(i,rate,freq,amp, FM_FLAG);
+		*(pWaveBuffer + wave_header_length + i) = (char)(vec_sample_freq[i]);
 	}
 }
 
-int WavFile::CreateWavFile(std::string path, std::string file_name)
+int WavFile::CreateWavFile(std::string file_path)
 {
-	std::ofstream ocout;
-	ocout.open(path+file_name, std::ios::out | std::ios::binary);//以二进制形式打开文件
-	if (ocout)
-		ocout.write(pWaveBuffer, totalLen);
+	WaveHeader * pHeader = new WaveHeader;
+	char* pWaveBuffer = new char[totalLen]; //音频数据
+	MakeWaveData(pHeader,pWaveBuffer);//采样点数
+
+	std::ofstream bin_ocout;
+	bin_ocout.open(file_path, std::ios::out | std::ios::binary);//以二进制形式打开文件
+	if (bin_ocout)
+		bin_ocout.write(pWaveBuffer, totalLen);
 	else
 	{		
 		std::cout << "Fail to create the file" << std::endl;
 		return 0;
 	}
 
-	ocout.close();
+	bin_ocout.close();
 	std::cout << "succeed to create the file" << std::endl;
 	return 1;
 }
 
 
-void WavFile::CreateWaveHeader()
+void WavFile::CreateWaveHeader(WaveHeader*pHeader, char* pWaveBuffer)
 {
-	pHeader = new WaveHeader;
 	pHeader->chRIFF[0] = 'R';
 	pHeader->chRIFF[1] = 'I';
 	pHeader->chRIFF[2] = 'F';
@@ -129,16 +139,10 @@ void WavFile::CreateWaveHeader()
 	pHeader->chDATA[3] = 'a';
 	pHeader->dwDATALen = totalLen - wave_header_length;//数据的长度，=文件总长度-头长度(44bit)
 
-	pWaveBuffer = new char[totalLen]; //音频数据
 	memcpy(pWaveBuffer, pHeader, wave_header_length);
-}
-
-WavFile::~WavFile() {
-	delete pHeader;
-	delete pWaveBuffer;
 }
 
 
 double GenerationFunc(int times, int rate, int freq, int amp, bool fm_flag) {
-	return sin(times * (MATH_PI * 2) / rate * freq)*amp*128.0/100.0+128;
+	return sin(times * (MATH_PI * 2) / (double)rate * freq)*amp*128.0/100.0+128;
 }
