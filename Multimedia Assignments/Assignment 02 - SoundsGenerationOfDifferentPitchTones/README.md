@@ -68,3 +68,8 @@ need to be improved
 
 - learn a simple method to synthesize music
 - learn about WAV format
+
+
+When Design a Type:
+Remember to try to keep the complete data.
+When outputing, do the lossy transformation.
