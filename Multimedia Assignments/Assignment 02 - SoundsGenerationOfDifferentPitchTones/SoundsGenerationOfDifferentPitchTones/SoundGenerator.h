@@ -49,11 +49,17 @@ public:
 	void ReadFromFile(std::string file_path);
 
 
+	static WavFile* Merge(WavFile* wav1, WavFile* wav2,int delay_time =0);//Mix wav1 with wav2
+	static WavFile* Combine(WavFile* wav1, WavFile* wav2);//wav1+wav2
+
 	void CreateSeperatePart();
 
 	void synthesize();
 
 	WavFile* GetFileLink() { return final_sound; }
+
+	~SoundGenerator();
+
 
 	//note - -  freq
 	std::map<int, int> map_number_tone2;
@@ -72,5 +78,7 @@ private:
 	WavFile* final_sound;
 };
 
+
+double Merge_Function(double a, double b);
 
 #endif 

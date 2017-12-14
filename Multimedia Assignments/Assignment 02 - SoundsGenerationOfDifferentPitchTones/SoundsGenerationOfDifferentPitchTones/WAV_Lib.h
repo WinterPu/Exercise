@@ -43,11 +43,12 @@ public :
 	//void MakeWaveData(int rate, int freq, int amp, char* p, int len);
 	void MakeWaveData(int rate, int freq, int amp, char * p, int len);
 	int CreateWavFile(std::string path, std::string file_name);
-	const int WAVE_HEAD_LENGTH = 44;
 
+
+	int  GetDuration() { return durations; }
 	char* GetDataLinker() { return pWaveBuffer;}
 	int   GetDataLength() { return wav_data_length; }
-	
+	int   GetHeaderLength() { return wave_header_length; }
 private:
 	int frequency;
 	int volume;
@@ -56,7 +57,7 @@ private:
 	WaveHeader * pHeader;
 	DWORD totalLen;
 	char* pWaveBuffer;
-
+	int wave_header_length;
 	int wav_data_length;
 
 
@@ -66,5 +67,8 @@ private:
 };
 
 
+
+#define FM_FLAG 0
+double GenerationFunc(int times,int rate, int freq, int amp, bool fm_flag);
 
 #endif

@@ -99,25 +99,118 @@ void SoundGenerator::ReadFromFile(std::string file_path)
 
 }
 
+
+WavFile* SoundGenerator::Merge(WavFile* pre, WavFile* rear, int delay_time)
+{
+	if (pre == NULL || rear == NULL)
+		return nullptr;
+
+	WavFile * new_rear;
+	WavFile * new_pre;
+	if (delay_time > 0)
+	{
+		//do delaying
+		WavFile* delayed_sound = new WavFile(REST_NOTE_FREQUENCY, DEFAULT_VOLUME, delay_time);
+		new_rear = SoundGenerator::Combine(delayed_sound, rear);
+
+		//do padding
+		if (pre->GetDuration() > rear->GetDuration())
+		{
+			//pre > rear
+			WavFile* delayed_sound_pre = new WavFile(REST_NOTE_FREQUENCY, DEFAULT_VOLUME, delay_time);
+			WavFile* padding_rear = new WavFile(REST_NOTE_FREQUENCY, DEFAULT_VOLUME, pre->GetDuration() - rear->GetDuration());
+			new_pre = SoundGenerator::Combine(pre, delayed_sound_pre);
+			WavFile* garbage = new_rear;
+			new_rear = SoundGenerator::Combine(rear,padding_rear);
+			delete garbage;
+		}
+		else if (pre->GetDuration() < rear->GetDuration())
+		{
+			// pre < rear
+			WavFile* delayed_sound_pre = new WavFile(REST_NOTE_FREQUENCY, DEFAULT_VOLUME, delay_time+ rear->GetDuration() - pre->GetDuration());
+			new_pre = SoundGenerator::Combine(pre, delayed_sound_pre);
+		}
+		else {
+			//pre == rear
+			WavFile* delayed_sound = new WavFile(REST_NOTE_FREQUENCY, DEFAULT_VOLUME, delay_time);
+			new_pre = SoundGenerator::Combine(pre, delayed_sound);
+
+		}
+
+	}
+	else
+	{
+		//do padding
+		if (pre->GetDuration() > rear->GetDuration())
+		{
+			//pre > rear
+			WavFile* padding_part = new WavFile(REST_NOTE_FREQUENCY, DEFAULT_VOLUME, pre->GetDuration() - rear->GetDuration());
+			new_rear = SoundGenerator::Combine(rear, padding_part);
+			new_pre = pre;
+		}
+		else if (pre->GetDuration() < rear->GetDuration())
+		{
+			// pre < rear
+			WavFile* padding_part = new WavFile(REST_NOTE_FREQUENCY, DEFAULT_VOLUME,  rear->GetDuration() - pre->GetDuration());
+			new_pre = SoundGenerator::Combine(pre, padding_part);
+			new_rear = rear;
+		}
+		else {
+			// pre == rear
+			new_pre = pre;
+			new_rear = rear;
+		}
+
+	}
+
+	int duration = new_pre->GetDuration();
+	WavFile* merged_file = new WavFile(1,DEFAULT_VOLUME,duration);
+	for (int i = 0; i < merged_file->GetDataLength(); i++)
+	{
+		*(merged_file->GetDataLinker() + merged_file->GetHeaderLength() + i) = Merge_Function((double)(*(pre->GetDataLinker() + pre->GetHeaderLength() + i)), (double)(*(rear->GetDataLinker() + rear->GetHeaderLength() + i)));
+	}
+	return merged_file;
+}
+
+
+WavFile * SoundGenerator::Combine(WavFile * pre, WavFile * rear)
+{
+	if (pre == NULL || rear == NULL)
+		return nullptr;
+
+	int total_durations = pre->GetDuration() + rear->GetDuration();
+
+	WavFile* combined_file = new WavFile(1, DEFAULT_VOLUME, total_durations);
+
+
+	for (int i = 0; i < pre->GetDataLength(); i++)
+	{
+		*(combined_file->GetDataLinker() + combined_file->GetHeaderLength() + i) = *(pre->GetDataLinker() + pre->GetHeaderLength() + i);
+	}
+	for (int i = pre->GetDataLength(); i <combined_file->GetDataLength(); i++)
+	{
+		*(combined_file->GetDataLinker() + combined_file->GetHeaderLength() + i) = *(rear->GetDataLinker() + rear->GetHeaderLength() + i - pre->GetDataLength());
+	}
+
+	return combined_file;
+}
+
 void SoundGenerator::CreateSeperatePart()
 {
 	basso_wave = new WavFile(1,DEFAULT_VOLUME,tone_duration);
 	alto_wave = new WavFile(1, DEFAULT_VOLUME, tone_duration);
 	//share part (use basso)
 	int num_notes = melody_tone2.size();
-	long long length = basso_wave->WAVE_HEAD_LENGTH;
+	long long length = basso_wave->GetHeaderLength();
 
 	for (int i = 0; i < num_notes; i++)
 	{
 		WavFile* tmp_wave_basso = new WavFile(melody_tone2[i].frequency, DEFAULT_VOLUME, melody_tone2[i].duration);
 		WavFile* tmp_wave_alto = new WavFile(melody_tone4[i].frequency, DEFAULT_VOLUME, melody_tone4[i].duration);
 
-		memcpy(basso_wave->GetDataLinker() + length, tmp_wave_basso->GetDataLinker() + tmp_wave_basso->WAVE_HEAD_LENGTH, tmp_wave_basso->GetDataLength());
-		memcpy(alto_wave->GetDataLinker() + length, tmp_wave_alto->GetDataLinker() + tmp_wave_alto->WAVE_HEAD_LENGTH, tmp_wave_alto->GetDataLength());
+		memcpy(basso_wave->GetDataLinker() + length, tmp_wave_basso->GetDataLinker() + tmp_wave_basso->GetHeaderLength(), tmp_wave_basso->GetDataLength());
+		memcpy(alto_wave->GetDataLinker() + length, tmp_wave_alto->GetDataLinker() + tmp_wave_alto->GetHeaderLength(), tmp_wave_alto->GetDataLength());
 		length += tmp_wave_basso->GetDataLength();
-
-		delete tmp_wave_basso;
-		delete tmp_wave_alto;
 	}
 }
 
@@ -129,7 +222,7 @@ void SoundGenerator::synthesize()
 	//else 
 	final_sound = new WavFile(1,DEFAULT_VOLUME,delay_time + tone_duration);
 
-	int header_length = basso_wave->WAVE_HEAD_LENGTH;
+	int header_length = basso_wave->GetHeaderLength();
 
 	WavFile* delayed_wave = new WavFile(1, DEFAULT_VOLUME, delay_time);
 	WavFile* delayed_basso_wave = new WavFile(1, DEFAULT_VOLUME, delay_time + tone_duration);
@@ -146,8 +239,16 @@ void SoundGenerator::synthesize()
 
 		*(final_sound->GetDataLinker() + header_length + i) = (*(delayed_basso_wave->GetDataLinker() + header_length + i) + *(delayed_alto_wave->GetDataLinker() + header_length + i)) / 2.0;
 	}
+}
 
-	delete delayed_wave;
-	delete delayed_alto_wave;
-	delete delayed_basso_wave;
+SoundGenerator::~SoundGenerator()
+{
+	delete basso_wave;
+	delete alto_wave;
+	delete final_sound;
+}
+
+double Merge_Function(double a, double b)
+{
+	return (a+b)/2.0;
 }
