@@ -36,7 +36,8 @@ use whitespace-character to seperate two musical notes.
 
 ## The ﬂowchart of your program
 
-![flow chart](https://github.com/WinterPu/Exercise/blob/master/Multimedia%20Assignments/Assignment%2002%20-%20SoundsGenerationOfDifferentPitchTones/README_IMAGE/Flowchart.png?raw=true)
+<img src="https://github.com/WinterPu/Exercise/blob/master/Multimedia%20Assignments/Assignment%2002%20-%20SoundsGenerationOfDifferentPitchTones/README_IMAGE/Flowchart.png?raw=true" height="600" alt="flow chart">
+
 
 ## The way to set up and run your program,
  
