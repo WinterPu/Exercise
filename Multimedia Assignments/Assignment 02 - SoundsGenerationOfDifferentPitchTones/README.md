@@ -45,8 +45,7 @@ for example:
 ## The illustrations or figures to demonstrate the results produced by your program.
 
 
-
-https://github.com/WinterPu/Exercise/tree/master/Multimedia%20Assignments/Assignment%2002%20-%20SoundsGenerationOfDifferentPitchTones
+![Small Bee Result](https://github.com/WinterPu/Exercise/blob/master/Multimedia%20Assignments/Assignment%2002%20-%20SoundsGenerationOfDifferentPitchTones/README_IMAGE/SmallBee.PNG?raw=true)
 
 
 ## The problem(s) encountered and the way you solve it(them), if any.
