@@ -7,11 +7,13 @@
 
 You can type musical notes with both format:
 
-`character： C  C# D D# E F F# G G# A A# B`
+```
+character： C  C# D D# E F F# G G# A A# B
 
-`number:       1  12  2  22  3  4  42  5  52   6 62   7 `
+number:       1  12  2  22  3  4  42  5  52   6 62   7
 
-`(use 12 to represent C# )`
+(use 12 to represent C# )
+···
 
 
 
@@ -19,9 +21,11 @@ if you want to denote 2 beats, you can use: -2
 
 so for each :
 
-`number: 1,12, 1-2, 12-2`
+···
+number: 1,12, 1-2, 12-2
 
-`character C, C# , C-2, C#-2`
+character C, C# , C-2, C#-2
+···
 
 
 ### Overall:
