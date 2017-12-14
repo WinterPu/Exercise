@@ -14,6 +14,11 @@
 
 #define MATH_PI 3.1415
 
+#define FM_FLAG 0
+double GenerationFunc(int times, int rate, int freq, int amp, bool fm_flag);
+
+
+
 //.wav文件的文件头结构 
 typedef struct
 {
@@ -50,8 +55,8 @@ public :
 	DWORD   GetDataLength() { return wav_data_length; }
 	DWORD    GetHeaderLength() { return wave_header_length; }
 
-	bool SetFMFlag() { fm_flag = ~fm_flag; }
-	bool SetFMFlag(bool value) { fm_flag = value; }
+	bool SetFMFlag() { fm_flag = ~fm_flag; vec_sample_freq.clear(); CalcSampleFrequency(); }
+	bool SetFMFlag(bool value) { fm_flag = value; vec_sample_freq.clear(); CalcSampleFrequency(); }
 
 	~WavFile() {};
 private:
@@ -75,7 +80,6 @@ private:
 
 
 
-#define FM_FLAG 0
-double GenerationFunc(int times,int rate, int freq, int amp, bool fm_flag);
+
 
 #endif

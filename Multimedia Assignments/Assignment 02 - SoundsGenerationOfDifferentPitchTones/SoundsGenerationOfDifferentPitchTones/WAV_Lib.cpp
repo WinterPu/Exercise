@@ -144,5 +144,9 @@ void WavFile::CreateWaveHeader(WaveHeader*pHeader, char* pWaveBuffer)
 
 
 double GenerationFunc(int times, int rate, int freq, int amp, bool fm_flag) {
-	return sin(times * (MATH_PI * 2) / (double)rate * freq)*amp*128.0/100.0+128;
+	double result = sin(times * (MATH_PI * 2) / (double)rate * freq)*amp*128.0 / 100.0 + 128;
+	if (fm_flag == false)
+		return result;
+	else
+		return sin(times * (MATH_PI * 2) / (double)rate * freq)*cos(times * (MATH_PI * 2) / (double)rate * freq)*amp * 128 / 100.0 + 128;
 }

@@ -14,8 +14,10 @@
 #define DEFAULT_DURATION 1
 #define REST_NOTE_DURATION 1
 #define REST_NOTE_FREQUENCY 1.0
-
 #define DEFAULT_DELAY_VALUE 1
+
+
+
 // C C# D D# E F F# G G# A A# B
 // 1,1#,2,2#,3,4,4#,5,5#,6,6#,7 ( 3,7 have no mapping #)
 
