@@ -1,4 +1,0 @@
-﻿  Source.cpp
-f:\github\exercise\multimedia assignments\assignment 02 - soundsgenerationofdifferentpitchtones\soundsgenerationofdifferentpitchtones\wav_lib.h(60): warning C4804: '~': unsafe use of type 'bool' in operation
-f:\github\exercise\multimedia assignments\assignment 02 - soundsgenerationofdifferentpitchtones\soundsgenerationofdifferentpitchtones\soundgenerator.h(55): warning C4091: 'typedef ': ignored on left of 'MusicalNote' when no variable is declared
-  SoundsGenerationOfDifferentPitchTones.vcxproj -> F:\Github\Exercise\Multimedia Assignments\Assignment 02 - SoundsGenerationOfDifferentPitchTones\Debug\SoundsGenerationOfDifferentPitchTones.exe
