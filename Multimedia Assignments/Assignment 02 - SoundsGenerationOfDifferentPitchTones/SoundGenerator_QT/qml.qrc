@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainForm.ui.qml</file>
+        <file>GUI_Image/Background.jpg</file>
+        <file>GUI_Image/shutdown_icon.png</file>
+        <file>PageMode1.qml</file>
+        <file>PageMode2.qml</file>
+        <file>PageMode3.qml</file>
+        <file>PageMode4.qml</file>
+    </qresource>
+</RCC>
