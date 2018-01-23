@@ -4,8 +4,9 @@
 #include <QQmlEngine>
 #include <QQmlComponent>
 #include <QLabel>
-
-
+#include <QQmlContext>
+#include "WAV_Lib.h"
+#include "SoundGenerator.h"
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
@@ -27,13 +28,18 @@ int main(int argc, char *argv[])
 //                 qDebug("aaaaaaaa");
 
 
+
+
 // <class> -> [import lib name] [qml name]
-//    qmlRegisterType<WavFile>("WAV_Lib", 1, 0, "WavFileGenerator");
-//    qmlRegisterType<SoundGenerator>("SoundGenerator", 1, 0, "SoundGenerator");
+    qmlRegisterType<WavFile>("WAV_Lib", 1, 0, "WavFileGenerator");
+   // qmlRegisterType<SoundGenerator>("SoundGenerator", 1, 0, "SoundGenerator");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
+
+    SoundGenerator soundGenerator;
+    engine.rootContext()->setContextProperty("soundGenerator",&soundGenerator);
 
 //    QObject *rootObject = engine.rootObjects().first();
 //    QObject *rect =rootObject->findChild<QObject *>("text201");

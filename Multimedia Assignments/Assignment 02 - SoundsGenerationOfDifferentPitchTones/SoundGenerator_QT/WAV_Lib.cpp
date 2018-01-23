@@ -104,6 +104,11 @@ void WavFile::MakeWaveData(WaveHeader*pHeader, char* pWaveBuffer)//²ÉÑùÂÊ¡¢ÆµÂÊ¡
 
 int WavFile::CreateWavFile(std::string file_path)
 {
+	//For QT
+	qDebug()<<file_path.c_str();
+	std::string head = "file:///";
+	file_path = file_path.substr(head.length());
+	
 	WaveHeader * pHeader = new WaveHeader;
 	char* pWaveBuffer = new char[totalLen]; //ÒôÆµÊı¾İ
 	MakeWaveData(pHeader,pWaveBuffer);//²ÉÑùµãÊı

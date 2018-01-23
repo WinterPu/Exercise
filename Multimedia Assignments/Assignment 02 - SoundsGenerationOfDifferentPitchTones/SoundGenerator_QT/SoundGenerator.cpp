@@ -258,6 +258,34 @@ bool SoundGenerator::SynthesizeFromFile(std::string file_path, int val_basso_ton
 		return false;
 }
 
+
+//For Qt
+void SoundGenerator::createWavFileFromFile(QString input_path, QString output_path){
+     std::string input_path_str = input_path.toUtf8().constData();
+     std::string output_path_str= output_path.toUtf8().constData();
+
+
+     std::string head = "file:///";
+     input_path_str = input_path_str.substr(head.length());
+    // output_path_str = output_path_str.substr(head.length());
+
+
+     if (SynthesizeFromFile(input_path_str))
+     {
+         WavFile* final_sound_ptr = GetFileLink();
+         if(final_sound_ptr!= NULL)
+             final_sound_ptr->CreateWavFile(output_path_str);
+         else {
+             qDebug() << "Maybe The Output Path Is Wrong!\n";
+         }
+     }
+
+}
+
+
+
+
+
 SoundGenerator::~SoundGenerator()
 {
     delete basso_wave;

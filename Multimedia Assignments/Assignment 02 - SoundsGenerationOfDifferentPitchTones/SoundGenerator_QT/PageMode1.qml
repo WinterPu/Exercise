@@ -7,6 +7,9 @@ Item {
     id: pageMode1
     width: 560
     height: 420
+    property alias sliderDuration: sliderDuration
+    property alias sliderVolume: sliderVolume
+    property alias sliderFrequency: sliderFrequency
 
     GroupBox {
         id: gridBox

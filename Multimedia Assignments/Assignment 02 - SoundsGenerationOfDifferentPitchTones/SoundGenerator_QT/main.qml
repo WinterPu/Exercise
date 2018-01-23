@@ -5,7 +5,7 @@ import QtQuick.Controls 2.1
 import QtQuick.Dialogs 1.2
 
 
-
+import WAV_Lib 1.0
 Window {
     id: mainWindows
     title: qsTr("Sound Generator")
@@ -22,15 +22,14 @@ Window {
         }
 
         buttonOutputFilePath.onClicked: fileDialogOutput.open()
-
+        buttonGeneration.onClicked: generate()
 
         FileDialog{
             id:fileDialogOutput
             selectExisting: false
         onAccepted: {
             mainForm.textFieldOutput.text = fileUrl
-
-         }
+           }
         }
 
 
@@ -39,6 +38,7 @@ Window {
 
 
     PageMode1{
+        id: pageMode1
         height: 380
         anchors.rightMargin: 30
         anchors.bottomMargin: 106
@@ -49,6 +49,7 @@ Window {
     }
 
     PageMode2{
+        id: pageMode2
         x: 0
         y: 110
         height: 380
@@ -60,6 +61,7 @@ Window {
     }
 
     PageMode3{
+        id: pageMode3
         x: 86
         y: 108
         width: 638
@@ -70,6 +72,7 @@ Window {
     }
 
     PageMode4{
+        id: pageMode4
         x: 56
         y: 26
         width: 800
@@ -88,5 +91,47 @@ Window {
             return false;
     }
 
+
+
+    WavFileGenerator{id: myWavFileGenerator}
+     function generate(){
+
+         var indexMode = mainForm.modeSelector.currentIndex;
+
+         if(indexMode === 0)
+         {
+             console.log("OK");
+
+
+             var path = mainForm.textFieldOutput.text;
+             if(path !=="")
+             {
+               myWavFileGenerator.initWavFile(pageMode1.sliderFrequency.value,pageMode1.sliderVolume.value,pageMode1.sliderDuration.value);
+               myWavFileGenerator.createWavFile(path);
+
+             }
+
+         }
+         else if (indexMode === 1)
+         {
+            console.log("Start 1");
+
+             var input_path = pageMode2.textFieldInput.text;
+             var output_path = mainForm.textFieldOutput.text;
+             if(path !=="")
+             {
+
+                soundGenerator.createWavFileFromFile(input_path,output_path);
+             }
+         }
+         else if (indexMode === 2)
+         {
+
+         }
+         else if (indexMode === 3)
+         {
+
+         }
+     }
 
 }

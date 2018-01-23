@@ -6,6 +6,7 @@ import QtQuick.Dialogs 1.2
 
 Item {
     id: item1
+    property alias textFieldInput: textFieldInput
 
     GroupBox {
         id: groupBox

@@ -10,7 +10,7 @@
 #include "WAV_Lib.h"
 #include <cctype>
 
-
+#include<QObject>
 #define DEFAULT_VOLUME 100
 #define DEFAULT_DURATION 1
 #define REST_NOTE_DURATION 1
@@ -57,9 +57,9 @@ typedef struct MusicalNote{
 
 
 
-class SoundGenerator{
+class SoundGenerator : public QObject {
 
-
+	Q_OBJECT
 public:
 	SoundGenerator();
 	SoundGenerator(int basso_no,int alto_no,int val_note_duration,int delay_time = DEFAULT_DELAY_VALUE);
@@ -83,6 +83,17 @@ public:
 	void SetToneNumber(int basso_no = DEFAULT_BASSO_TONE, int alto_no= DEFAULT_ALTO_TONE) { basso_tone_number = basso_no; alto_tone_number = alto_no;  InitializeFreMap();}
 	int GetBassoToneNumber() { return basso_tone_number; }
 	int GetAltoToneNumber() { return alto_tone_number; }
+
+
+
+    //For Qt
+    Q_INVOKABLE void createWavFileFromFile(QString input_path, QString output_path);
+
+
+
+
+
+
 	~SoundGenerator();
 
 private:
