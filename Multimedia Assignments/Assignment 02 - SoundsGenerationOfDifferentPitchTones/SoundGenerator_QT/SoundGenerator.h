@@ -10,6 +10,7 @@
 #include "WAV_Lib.h"
 #include <cctype>
 
+
 #define DEFAULT_VOLUME 100
 #define DEFAULT_DURATION 1
 #define REST_NOTE_DURATION 1
@@ -56,7 +57,8 @@ typedef struct MusicalNote{
 
 
 
-class SoundGenerator {
+class SoundGenerator{
+
 
 public:
 	SoundGenerator();

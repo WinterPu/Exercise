@@ -7,13 +7,6 @@ import QtQuick.Dialogs 1.2
 Item {
     id: item1
 
-
-
-
-
-
-
-
     GroupBox {
         id: groupBox1
         x: 47
@@ -75,6 +68,7 @@ Item {
                                 x: 0
                                 y: 16
                                 text: qsTr("Tone 0")
+                                onClicked: checkRadioButton(1,0)
                             }
 
                             RadioButton {
@@ -83,6 +77,7 @@ Item {
                                 y: 41
                                 width: 56
                                 text: qsTr("Tone 1")
+                                onClicked: checkRadioButton(1,1)
                             }
 
                             RadioButton {
@@ -90,6 +85,7 @@ Item {
                                 x: 0
                                 y: 66
                                 text: qsTr("Tone 2")
+                                onClicked: checkRadioButton(1,2)
                             }
 
                             RadioButton {
@@ -97,6 +93,7 @@ Item {
                                 x: 0
                                 y: 91
                                 text: qsTr("Tone 3")
+                                onClicked: checkRadioButton(1,3)
                             }
 
                             RadioButton {
@@ -104,6 +101,7 @@ Item {
                                 x: 0
                                 y: 116
                                 text: qsTr("Tone 4")
+                                onClicked: checkRadioButton(1,4)
                             }
 
                             RadioButton {
@@ -111,6 +109,7 @@ Item {
                                 x: 0
                                 y: 141
                                 text: qsTr("Tone 5")
+                                onClicked: checkRadioButton(1,5)
                             }
 
                             RadioButton {
@@ -118,6 +117,7 @@ Item {
                                 x: 0
                                 y: 166
                                 text: qsTr("Tone 6")
+                                onClicked: checkRadioButton(1,6)
                             }
 
                             RadioButton {
@@ -125,6 +125,7 @@ Item {
                                 x: 0
                                 y: 191
                                 text: qsTr("Tone 7")
+                                onClicked: checkRadioButton(1,7)
                             }
 
                             RadioButton {
@@ -132,6 +133,7 @@ Item {
                                 x: 0
                                 y: 216
                                 text: qsTr("Tone 8")
+                                onClicked: checkRadioButton(1,8)
                             }
                         }
 
@@ -149,6 +151,7 @@ Item {
                                 x: 0
                                 y: 16
                                 text: qsTr("Tone 0")
+                                onClicked: checkRadioButton(2,0)
                             }
 
                             RadioButton {
@@ -157,6 +160,7 @@ Item {
                                 y: 41
                                 width: 56
                                 text: qsTr("Tone 1")
+                                onClicked: checkRadioButton(2,1)
                             }
 
                             RadioButton {
@@ -164,6 +168,7 @@ Item {
                                 x: 0
                                 y: 66
                                 text: qsTr("Tone 2")
+                                onClicked: checkRadioButton(2,2)
                             }
 
                             RadioButton {
@@ -171,6 +176,7 @@ Item {
                                 x: 0
                                 y: 91
                                 text: qsTr("Tone 3")
+                                onClicked: checkRadioButton(2,3)
                             }
 
                             RadioButton {
@@ -178,6 +184,7 @@ Item {
                                 x: 0
                                 y: 116
                                 text: qsTr("Tone 4")
+                                onClicked: checkRadioButton(2,4)
                             }
 
                             RadioButton {
@@ -185,6 +192,7 @@ Item {
                                 x: 0
                                 y: 141
                                 text: qsTr("Tone 5")
+                                onClicked: checkRadioButton(2,5)
                             }
 
                             RadioButton {
@@ -192,6 +200,7 @@ Item {
                                 x: 0
                                 y: 166
                                 text: qsTr("Tone 6")
+                                onClicked: checkRadioButton(2,6)
                             }
 
                             RadioButton {
@@ -199,6 +208,7 @@ Item {
                                 x: 0
                                 y: 191
                                 text: qsTr("Tone 7")
+                                onClicked: checkRadioButton(2,7)
                             }
 
                             RadioButton {
@@ -206,6 +216,7 @@ Item {
                                 x: 0
                                 y: 216
                                 text: qsTr("Tone 8")
+                                onClicked: checkRadioButton(2,8)
                             }
                         }
                     }
@@ -214,33 +225,40 @@ Item {
                         id: groupBox
                         width: 315
                         height: 60
-                        title: qsTr("Group Box")
+                        title: qsTr("Difference Duration")
 
                         RowLayout {
                             id: rowLayout
                             anchors.fill: parent
 
-                            Label {
-                                id: label
-                                text: qsTr("Label")
-                                Layout.preferredHeight: 20
-                                Layout.preferredWidth: 30
-                            }
-
                             Slider {
-                                id: sliderHorizontal
+                                id: sliderDiffDuration
                                 width: 150
+                                stepSize: 1
+                                minimumValue: 0
+                                value: 1
+                                maximumValue: 3
                                 Layout.preferredHeight: 20
                                 Layout.preferredWidth: 150
+                                updateValueWhileDragging: {
+                                textFieldDiffDuration.text  = value;
+                                }
                             }
 
                             TextField {
-                                id: textField
+                                id: textFieldDiffDuration
                                 x: 200
                                 width: 50
                                 Layout.preferredHeight: 20
                                 Layout.preferredWidth: 50
                                 placeholderText: qsTr("Text Field")
+                                text:sliderDiffDuration.value
+
+                                validator:RegExpValidator { regExp:  /^(([0-9]|10)$/ }
+                                onTextChanged: {
+                                    var number = parseInt(text);
+                                    sliderDiffDuration.value = number;
+                                }
                             }
 
                         }
@@ -249,4 +267,70 @@ Item {
             }
         }
     }
+
+
+
+    function checkRadioButton(numTone,index){
+
+           if(this.checked === false)
+               this.checked = true;
+           else {
+               for(var i =0; i<9;i++)
+               {
+                    if(index !== i)
+                        returnRadioButtonWithIndex(numTone,i).checked = false;
+
+
+               }
+
+           }
+
+    }
+
+    function returnRadioButtonWithIndex(numTone,index){
+        if(numTone === 1)
+        {
+            if(index === 0)
+                return rbTone0One;
+            else if(index ===1)
+                return rbTone1One;
+            else if(index ===2)
+                return rbTone2One;
+            else if(index ===3)
+                return rbTone3One;
+            else if(index ===4)
+                return rbTone4One;
+            else if(index ===5)
+                return rbTone5One;
+            else if(index ===6)
+                return rbTone6One;
+            else if(index ===7)
+                return rbTone7One;
+            else if(index ===8)
+                return rbTone8One;
+
+        }
+        else {
+            if(index === 0)
+                return rbTone0Two;
+            else if(index ===1)
+                return rbTone1Two;
+            else if(index ===2)
+                return rbTone2Two;
+            else if(index ===3)
+                return rbTone3Two;
+            else if(index ===4)
+                return rbTone4Two;
+            else if(index ===5)
+                return rbTone5Two;
+            else if(index ===6)
+                return rbTone6Two;
+            else if(index ===7)
+                return rbTone7Two;
+            else if(index ===8)
+                return rbTone8Two;
+
+        }
+    }
+
 }

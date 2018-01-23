@@ -25,6 +25,20 @@ WavFile::WavFile(int v_samplefreq, int v_channels, int v_channelbits, int v_freq
 	CalcSampleFrequency();
 }
 
+void WavFile::initWavFile(int v_frequency, int v_volume, int v_durations){
+	
+	frequency = v_frequency;
+	volume = v_volume;
+	durations = v_durations;
+
+	wave_header_length = sizeof(WaveHeader);
+	totalLen = (m_samplefreq * m_channels * m_channelbits / 8) * durations + wave_header_length;//文件总长度=(采样率 * 通道数 * 比特数 / 8) * 持续时间(s)
+	wav_data_length = totalLen - wave_header_length;
+
+	CalcSampleFrequency();
+
+}
+
 void WavFile::CalcSampleFrequency()
 {
 	int len = m_samplefreq * durations;

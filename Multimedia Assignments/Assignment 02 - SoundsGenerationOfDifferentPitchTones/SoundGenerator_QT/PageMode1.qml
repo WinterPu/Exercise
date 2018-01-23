@@ -31,10 +31,15 @@ Item {
             Label {
                 id:labelDuration
                 text: "Duration"
+                Layout.preferredHeight: 20
+                Layout.preferredWidth: 75
             }
 
             Slider {
                 id: sliderFrequency
+                stepSize: 1
+                Layout.preferredHeight: 20
+                Layout.preferredWidth: 300
                 maximumValue: 10000
                 updateValueWhileDragging: {
                     textfieldFrequency.text = value
@@ -44,6 +49,9 @@ Item {
 
             Slider {
                 id: sliderVolume
+                stepSize: 1
+                Layout.preferredHeight: 20
+                Layout.preferredWidth: 300
                 maximumValue: 100
                 updateValueWhileDragging:{
                     textfieldVolume.text = value
@@ -52,6 +60,9 @@ Item {
 
             Slider {
                 id: sliderDuration
+                stepSize: 1
+                Layout.preferredHeight: 20
+                Layout.preferredWidth: 300
                 maximumValue: 10
                 updateValueWhileDragging: {
                     textfieldDuration.text = value
@@ -62,6 +73,8 @@ Item {
                 id: textfieldFrequency
                 placeholderText: qsTr("Text Field")
                 text:sliderFrequency.value
+                Layout.preferredHeight: 20
+                Layout.preferredWidth: 75
 
                 validator:RegExpValidator { regExp:  /^([1-9]\d{0,3})|10000|0$ / }
                 onTextChanged: {
@@ -74,6 +87,8 @@ Item {
                 id: textfieldVolume
                 placeholderText: qsTr("Text Field")
                 text:sliderVolume.value
+                Layout.preferredHeight: 20
+                Layout.preferredWidth: 75
                 validator:RegExpValidator { regExp:  /^100$|^(\d|[1-9]\d)$/ }
                 onTextChanged: {
                     var number = parseInt(text);
@@ -84,6 +99,8 @@ Item {
                 id: textfieldDuration
                 placeholderText: qsTr("Text Field")
                 text:sliderDuration.value
+                Layout.preferredHeight: 20
+                Layout.preferredWidth: 75
 
                 validator:RegExpValidator { regExp:  /^(([0-9]|10)$/ }
                 onTextChanged: {

@@ -260,9 +260,9 @@ bool SoundGenerator::SynthesizeFromFile(std::string file_path, int val_basso_ton
 
 SoundGenerator::~SoundGenerator()
 {
-	delete basso_wave;
-	delete alto_wave;
-	delete final_sound;
+    delete basso_wave;
+    delete alto_wave;
+    delete final_sound;
 }
 
 double Merge_Function(double a, double b)

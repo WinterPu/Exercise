@@ -38,12 +38,12 @@ typedef struct
 class WavFile {
 
 public :
-	
+	WavFile():m_samplefreq(44100), m_channels(1),m_channelbits(8){}
 	WavFile(int v_frequency, int v_volume, int v_durations);
 	//samplefreq > 2 *frequency  according to the Nyquist - Shannon theorem
 	WavFile(int v_samplefreq, int v_channels, int v_channelbits, int v_frequency, int v_volume, int v_durations);
 	
-
+	void initWavFile(int v_frequency, int v_volume, int v_durations);
 	void CreateWaveHeader(WaveHeader*pHeader, char* pWaveBuffer);
 
 	//void MakeWaveData(int rate, int freq, int amp, char* p, int len);
@@ -61,7 +61,7 @@ public :
 	static void SetFMFlag(bool value) { WavFile::fm_flag = value; }
 	static bool GetFMFlag() { return fm_flag; }
 
-	~WavFile() {};
+	~WavFile() {}
 private:
 	static bool fm_flag;
 	int frequency; // sound frequency

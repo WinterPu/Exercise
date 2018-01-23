@@ -8,7 +8,9 @@ Rectangle {
 
     width: 800
     height: 600
-    property alias buttonOutput: buttonOutput
+    property alias buttonOutputFilePath: buttonOutputFilePath
+    property alias labelOutputStatus: labelOutputStatus
+    property alias buttonGeneration: buttonGeneration
     property alias textFieldOutput: textFieldOutput
     property alias modeSelector: modeSelector
     property alias cbModeItems: cbModeItems
@@ -220,7 +222,7 @@ Rectangle {
                     }
 
                     Button {
-                        id: buttonOutput
+                        id: buttonOutputFilePath
                         x: 0
                         width: 100
                         text: qsTr("...")
@@ -241,7 +243,7 @@ Rectangle {
                         Layout.preferredWidth: 400
                     }
                     Label {
-                        id: labelStatus
+                        id: labelOutputStatus
                         x: 0
                         y: 0
                         width: 100

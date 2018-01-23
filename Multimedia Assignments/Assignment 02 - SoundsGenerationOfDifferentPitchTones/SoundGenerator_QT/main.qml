@@ -4,13 +4,14 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.1
 import QtQuick.Dialogs 1.2
 
+
+
 Window {
     id: mainWindows
     title: qsTr("Sound Generator")
     visible: true
     width: 800
     height: 600
-
 
     MainForm {
         id: mainForm
@@ -20,7 +21,7 @@ Window {
             mainWindows.close();
         }
 
-        buttonOutput.onClicked: fileDialogOutput.open()
+        buttonOutputFilePath.onClicked: fileDialogOutput.open()
 
 
         FileDialog{
@@ -59,12 +60,12 @@ Window {
     }
 
     PageMode3{
-        y: 110
-        height: 380
-        anchors.right: parent.right
-        anchors.rightMargin: 30
-        anchors.left: parent.left
-        anchors.leftMargin: 30
+        x: 86
+        y: 108
+        width: 638
+        height: 485
+        scale: 1
+
         visible: selectPages(2)
     }
 
@@ -87,7 +88,5 @@ Window {
             return false;
     }
 
-    function generate(){
 
-    }
 }
