@@ -69,6 +69,11 @@ you can use following command:
 >- to end the program
 
 
+
+
+Qt Version GUI：
+![Qt_GUI](https://github.com/WinterPu/Exercise/blob/master/Multimedia%20Assignments/Assignment%2002%20-%20SoundsGenerationOfDifferentPitchTones/README_IMAGE/Qt%20Version%20GUI.png?raw=true)
+
 ## The illustrations or figures to demonstrate the results produced by your program.
 
 Small Bee 
