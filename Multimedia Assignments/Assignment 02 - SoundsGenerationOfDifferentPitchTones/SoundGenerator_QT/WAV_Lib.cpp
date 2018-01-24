@@ -106,8 +106,9 @@ int WavFile::CreateWavFile(std::string file_path)
 {
 	//For QT
 	qDebug()<<file_path.c_str();
-	std::string head = "file:///";
-	file_path = file_path.substr(head.length());
+	// (string processing) has done in QML File (in [FileDialog])
+	//std::string head = "file:///";
+	//file_path = file_path.substr(head.length());
 	
 	WaveHeader * pHeader = new WaveHeader;
 	char* pWaveBuffer = new char[totalLen]; //ÒôÆµÊý¾Ý

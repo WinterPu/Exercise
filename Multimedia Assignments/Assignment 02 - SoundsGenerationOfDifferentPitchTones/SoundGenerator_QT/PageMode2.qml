@@ -57,7 +57,13 @@ Item {
     FileDialog{
         id:fileDialogInput
         onAccepted: {
-            textFieldInput.text = fileUrl;
+            var path = fileUrl.toString();
+            var head = "file:///";
+
+            path = path.substring(head.length,path.length);
+            textFieldInput.text = path;
         }
     }
+
+
 }

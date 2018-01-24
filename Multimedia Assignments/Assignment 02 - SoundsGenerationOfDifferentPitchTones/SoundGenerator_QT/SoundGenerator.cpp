@@ -52,74 +52,82 @@ bool SoundGenerator::ReadFromFile(std::string file_path)
 	std::string str;
 	while (stream_musical_notes >> str) {
 
-		std::cout << "Original " << str << std::endl;
-		if (str == "-")
-		{
-			MusicalNote tmp(REST_NOTE_FREQUENCY, REST_NOTE_DURATION);
-			melody_tonebasso.push_back(tmp);
-			melody_tonealto.push_back(tmp);
-			tone_duration++;
-		}
-		else if (isdigit(str[0]))
-		{
-			// 1,12,1-2,12-2
-			std::map<int, int>::iterator iter;
-			int number_note;
-			float tmp_duration = each_note_duration;
-			if (str.size() == 1 || str.size() == 2)
-				number_note = atoi(str.c_str());
-
-			else if (str[1] == '-')
-			{
-				int number_note = str[0] - '0';
-				tmp_duration = atoi(str.substr(2, str.size() - 2).c_str());
-			}
-			else {
-				int number_note = atoi(str.substr(0, 2).c_str());
-				tmp_duration = atoi(str.substr(3, str.size() - 3).c_str());
-			}
-
-			iter = map_number_tonebasso.find(number_note);
-			if (iter != map_number_tonebasso.end())
-			{
-				MusicalNote tmp(iter->second, tmp_duration); melody_tonebasso.push_back(tmp);
-				MusicalNote tmp2(map_number_tonealto.find(number_note)->second, tmp_duration); 	melody_tonealto.push_back(tmp2);
-			}
-			//cannot find: wait to be handled
-			tone_duration+= tmp_duration;
-		}
-		else {
-			//A ,A#,A-2,A#-2
-			std::map<std::string, int>::iterator iter;
-			std::string str_note;
-			float tmp_duration = each_note_duration;
-			if (str.size() == 1 || str.size() == 2)
-				str_note = str;
-
-			else if (str[1] == '-')
-			{
-				str_note = toupper(str[0]); 
-				tmp_duration = atoi(str.substr(2, str.size() - 2).c_str());
-			}
-			else {
-				str_note = str.substr(0, 2); str_note[0] = toupper(str_note[0]);
-				tmp_duration = atoi(str.substr(3, str.size() - 3).c_str());
-			}
-
-			iter = map_char_tonebasso.find(str_note);
-			if (iter != map_char_tonebasso.end())
-			{
-				MusicalNote tmp(iter->second, tmp_duration); melody_tonebasso.push_back(tmp);
-				MusicalNote tmp2(map_char_tonealto.find(str_note)->second, tmp_duration); 	melody_tonealto.push_back(tmp2);
-			}
-			//cannot find: wait to be handled
-			tone_duration += tmp_duration;
-		}
+        recognizeMusicialNoteFromLegalStr(str);
 	}
 	return true;
+}
 
+
+
+void  SoundGenerator::recognizeMusicialNoteFromLegalStr(std::string str){
+
+
+    std::cout << "Original " << str << std::endl;
+    if (str == "-")
+    {
+        MusicalNote tmp(REST_NOTE_FREQUENCY, REST_NOTE_DURATION);
+        melody_tonebasso.push_back(tmp);
+        melody_tonealto.push_back(tmp);
+        tone_duration++;
+    }
+    else if (isdigit(str[0]))
+    {
+        // 1,12,1-2,12-2
+        std::map<int, int>::iterator iter;
+        int number_note;
+        float tmp_duration = each_note_duration;
+        if (str.size() == 1 || str.size() == 2)
+            number_note = atoi(str.c_str());
+
+        else if (str[1] == '-')
+        {
+            int number_note = str[0] - '0';
+            tmp_duration = atoi(str.substr(2, str.size() - 2).c_str());
+        }
+        else {
+            int number_note = atoi(str.substr(0, 2).c_str());
+            tmp_duration = atoi(str.substr(3, str.size() - 3).c_str());
+        }
+
+        iter = map_number_tonebasso.find(number_note);
+        if (iter != map_number_tonebasso.end())
+        {
+            MusicalNote tmp(iter->second, tmp_duration); melody_tonebasso.push_back(tmp);
+            MusicalNote tmp2(map_number_tonealto.find(number_note)->second, tmp_duration); 	melody_tonealto.push_back(tmp2);
+        }
+        //cannot find: wait to be handled
+        tone_duration+= tmp_duration;
+    }
+    else {
+        //A ,A#,A-2,A#-2
+        std::map<std::string, int>::iterator iter;
+        std::string str_note;
+        float tmp_duration = each_note_duration;
+        if (str.size() == 1 || str.size() == 2)
+            str_note = str;
+
+        else if (str[1] == '-')
+        {
+            str_note = toupper(str[0]);
+            tmp_duration = atoi(str.substr(2, str.size() - 2).c_str());
+        }
+        else {
+            str_note = str.substr(0, 2); str_note[0] = toupper(str_note[0]);
+            tmp_duration = atoi(str.substr(3, str.size() - 3).c_str());
+        }
+
+        iter = map_char_tonebasso.find(str_note);
+        if (iter != map_char_tonebasso.end())
+        {
+            MusicalNote tmp(iter->second, tmp_duration); melody_tonebasso.push_back(tmp);
+            MusicalNote tmp2(map_char_tonealto.find(str_note)->second, tmp_duration); 	melody_tonealto.push_back(tmp2);
+        }
+        //cannot find: wait to be handled
+        tone_duration += tmp_duration;
+    }
 
 }
+
 
 
 WavFile* SoundGenerator::Merge(WavFile* pre, WavFile* rear, int delay_time)
@@ -264,12 +272,6 @@ void SoundGenerator::createWavFileFromFile(QString input_path, QString output_pa
      std::string input_path_str = input_path.toUtf8().constData();
      std::string output_path_str= output_path.toUtf8().constData();
 
-
-     std::string head = "file:///";
-     input_path_str = input_path_str.substr(head.length());
-    // output_path_str = output_path_str.substr(head.length());
-
-
      if (SynthesizeFromFile(input_path_str))
      {
          WavFile* final_sound_ptr = GetFileLink();
@@ -283,8 +285,39 @@ void SoundGenerator::createWavFileFromFile(QString input_path, QString output_pa
 }
 
 
+void SoundGenerator::createWavFileFromTwoWav(int f1,int v1,int d1,int f2,int v2,int d2, QString output_path,int delay_time){
+    
+    std::string output_path_str= output_path.toUtf8().constData();
 
+    WavFile* wav1= new WavFile(f1,v1,d1);
+    WavFile* wav2= new WavFile(f2,v2,d2);
+    WavFile* final_sound = SoundGenerator::Merge(wav1,wav2,delay_time);
+    final_sound->CreateWavFile(output_path_str);
+}
 
+void  SoundGenerator::createWavFileFromText(QString context,QString output_path,int val_basso_tone,int  val_alto_tone,int delay_time){
+    std::string context_str = context.toUtf8().constData();
+    std::string output_path_str = output_path.toUtf8().constData();
+
+    std::stringstream ss;
+    ss<<context_str;
+    std::string tmp;
+    while(ss>>tmp)
+    {
+
+        recognizeMusicialNoteFromLegalStr(tmp);
+    }
+
+    if (val_basso_tone != DEFAULT_BASSO_TONE || val_alto_tone != DEFAULT_ALTO_TONE)
+        SetToneNumber(val_basso_tone, val_alto_tone);
+
+    if( melody_tonebasso.size() > 0)
+    {
+        CreateSeperatePart();
+        final_sound = SoundGenerator::Merge(basso_wave, alto_wave, delay_time);
+        final_sound->CreateWavFile(output_path_str);
+    }
+}
 
 SoundGenerator::~SoundGenerator()
 {

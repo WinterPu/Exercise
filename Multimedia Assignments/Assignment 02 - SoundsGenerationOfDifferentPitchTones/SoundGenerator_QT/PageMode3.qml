@@ -7,6 +7,13 @@ import QtQuick.Dialogs 1.2
 
 Item {
     id: item1
+    property alias sliderFrequencyOne: sliderFrequencyOne
+    property alias sliderVolumeOne: sliderVolumeOne
+    property alias sliderDurationOne: sliderDurationOne
+    property alias sliderFrequencyTwo: sliderFrequencyTwo
+    property alias sliderVolumeTwo: sliderVolumeTwo
+    property alias sliderDurationTwo: sliderDurationTwo
+    property alias sliderDiffDuration: sliderDiffDuration
     StackLayout {
         id: stackLayout1
         anchors.rightMargin: 0

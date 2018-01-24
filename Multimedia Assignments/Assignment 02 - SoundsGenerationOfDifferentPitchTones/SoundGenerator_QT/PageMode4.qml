@@ -6,6 +6,8 @@ import QtQuick.Dialogs 1.2
 
 Item {
     id: item1
+    property alias textArea: textArea
+    property alias sliderDiffDuration: sliderDiffDuration
 
     GroupBox {
         id: groupBox1
@@ -279,8 +281,6 @@ Item {
                {
                     if(index !== i)
                         returnRadioButtonWithIndex(numTone,i).checked = false;
-
-
                }
 
            }
@@ -331,6 +331,16 @@ Item {
                 return rbTone8Two;
 
         }
+    }
+
+
+    function getSelectedTone(numTone){
+        for(var i =0; i<9;i++)
+        {
+            if(returnRadioButtonWithIndex(numTone,i).checked === true)
+                return i;
+        }
+        return -1;
     }
 
 }

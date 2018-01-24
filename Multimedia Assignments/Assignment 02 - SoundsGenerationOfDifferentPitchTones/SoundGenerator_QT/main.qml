@@ -28,7 +28,12 @@ Window {
             id:fileDialogOutput
             selectExisting: false
         onAccepted: {
-            mainForm.textFieldOutput.text = fileUrl
+           
+            var path = fileUrl.toString();
+            var head = "file:///";
+
+            path = path.substring(head.length,path.length);  
+            mainForm.textFieldOutput.text = path;
            }
         }
 
@@ -98,40 +103,70 @@ Window {
 
          var indexMode = mainForm.modeSelector.currentIndex;
 
+         var output_path = mainForm.textFieldOutput.text;
+
+         if(output_path === "")
+         {
+            console.log("Empty Path");
+            mainForm.labelOutputStatus.text = "null path";
+            return;
+         }
+
+         soundGenerator.initForQt();
+         mainForm.labelOutputStatus.text = "start";
+         mainForm.progressBarGeneration.value =0;
+
          if(indexMode === 0)
          {
-             console.log("OK");
 
-
-             var path = mainForm.textFieldOutput.text;
-             if(path !=="")
-             {
-               myWavFileGenerator.initWavFile(pageMode1.sliderFrequency.value,pageMode1.sliderVolume.value,pageMode1.sliderDuration.value);
-               myWavFileGenerator.createWavFile(path);
-
-             }
+           myWavFileGenerator.initWavFile(pageMode1.sliderFrequency.value,pageMode1.sliderVolume.value,pageMode1.sliderDuration.value);
+           myWavFileGenerator.createWavFile(output_path);
 
          }
          else if (indexMode === 1)
          {
-            console.log("Start 1");
-
              var input_path = pageMode2.textFieldInput.text;
-             var output_path = mainForm.textFieldOutput.text;
-             if(path !=="")
-             {
-
-                soundGenerator.createWavFileFromFile(input_path,output_path);
-             }
+             soundGenerator.createWavFileFromFile(input_path,output_path);
          }
          else if (indexMode === 2)
          {
+             var f1 = pageMode3.sliderFrequencyOne.value;
+             var v1 = pageMode3.sliderVolumeOne.value;
+             var d1 = pageMode3.sliderDurationOne.value;
 
+             var f2 = pageMode3.sliderFrequencyTwo.value;
+             var v2 = pageMode3.sliderVolumeTwo.value;
+             var d2 = pageMode3.sliderDurationTwo.value;
+
+             var diff_time = pageMode3.sliderDiffDuration.value;
+             soundGenerator.createWavFileFromTwoWav(f1,v1,d1,f2,v2,d2,output_path,diff_time);
          }
          else if (indexMode === 3)
          {
 
+            var numTone1 =pageMode4.getSelectedTone(1);
+            var numTone2 =pageMode4.getSelectedTone(2);
+            var context = pageMode4.textArea.text;
+            var duration = pageMode4.sliderDiffDuration.value;
+
+            var bassoTone;
+            var altoTone;
+             if(numTone1 <= numTone2)
+             {
+                bassoTone = numTone1;
+                altoTone = numTone2;
+             }
+             else
+             {
+                 bassoTone = numTone2;
+                 altoTone = numTone1;
+             }
+
+              soundGenerator.createWavFileFromText(context,output_path,bassoTone,altoTone,duration);
          }
+
+          mainForm.labelOutputStatus.text = "Done";
+          mainForm.progressBarGeneration.value =100;
      }
 
 }

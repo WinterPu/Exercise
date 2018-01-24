@@ -69,7 +69,7 @@ public:
 	
 	//rest note default duration is 1s
 	bool ReadFromFile(std::string file_path);
-
+    void recognizeMusicialNoteFromLegalStr(std::string str);
 
 	static WavFile* Merge(WavFile* wav1, WavFile* wav2,int delay_time =0);//Mix wav1 with wav2
 	static WavFile* Combine(WavFile* wav1, WavFile* wav2);//wav1+wav2
@@ -89,15 +89,16 @@ public:
     //For Qt
     Q_INVOKABLE void createWavFileFromFile(QString input_path, QString output_path);
 
+    Q_INVOKABLE void createWavFileFromTwoWav(int f1,int v1,int d1,int f2,int v2,int d2, QString output_path,int delay_time);
 
+    Q_INVOKABLE void createWavFileFromText(QString context,QString output_path,int val_basso_tone,int  val_alto_tone,int delay_time);
 
-
-
+    Q_INVOKABLE void initForQt(){InitializeFreMap();}
 
 	~SoundGenerator();
 
 private:
-	int basso_tone_number;
+    int basso_tone_number; // 0~8
 	int alto_tone_number;
 	int each_note_duration;
 	int delay_time;
