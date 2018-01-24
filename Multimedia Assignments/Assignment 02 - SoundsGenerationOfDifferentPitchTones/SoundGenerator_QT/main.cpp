@@ -11,8 +11,12 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
+//  [Just For Practice]
+//  [#1 ]Exposing C++  to QML
 //    qmlRegisterType<MyLabel>("MyLabelLib", 1, 0, "MyLabel");
 
+
+//  [#2] Exposing QML Objects to C++ [Way 1]
 //    QQmlEngine engine01;
 //        QQmlComponent component(& engine01,
 //               QUrl(QStringLiteral("qrc:/main.qml")));
@@ -34,6 +38,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<WavFile>("WAV_Lib", 1, 0, "WavFileGenerator");
    // qmlRegisterType<SoundGenerator>("SoundGenerator", 1, 0, "SoundGenerator");
 
+
+ //  [#3] Exposing QML Objects to C++ [Way 2]
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
