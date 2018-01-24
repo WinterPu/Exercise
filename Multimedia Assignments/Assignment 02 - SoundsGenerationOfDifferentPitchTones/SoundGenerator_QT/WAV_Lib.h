@@ -65,6 +65,8 @@ public :
 	static void SetFMFlag(bool value) { WavFile::fm_flag = value; }
 	static bool GetFMFlag() { return fm_flag; }
 
+	Q_INVOKABLE void setFMFLag(bool value){ WavFile::SetFMFlag(value);}
+	Q_INVOKABLE bool getFMFLag(){ return WavFile::GetFMFlag();}
 	~WavFile() {}
 private:
 	static bool fm_flag;

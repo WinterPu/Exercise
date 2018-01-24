@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.1
 import QtQuick.Dialogs 1.2
 
-
 import WAV_Lib 1.0
 Window {
     id: mainWindows
@@ -23,6 +22,15 @@ Window {
 
         buttonOutputFilePath.onClicked: fileDialogOutput.open()
         buttonGeneration.onClicked: generate()
+
+        modeSelector.onActivated: {
+            labelOutputStatus.text = "start";
+            progressBarGeneration.value =0;
+        }
+
+        boxFM.onCheckedChanged: {
+           myWavFileGenerator.setFMFLag(boxFM.checked);
+        }
 
         FileDialog{
             id:fileDialogOutput

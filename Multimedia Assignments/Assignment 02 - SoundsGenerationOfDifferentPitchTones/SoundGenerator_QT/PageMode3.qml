@@ -71,6 +71,7 @@ Item {
 
                     Slider {
                         id: sliderFrequencyOne
+                        value: 82
                         maximumValue: 10000
                         Layout.preferredHeight: 20
                         Layout.preferredWidth: 200
@@ -82,6 +83,7 @@ Item {
 
                     Slider {
                         id: sliderVolumeOne
+                        value: 100
                         stepSize: 1
                         Layout.preferredHeight: 20
                         Layout.preferredWidth: 200
@@ -93,6 +95,7 @@ Item {
 
                     Slider {
                         id: sliderDurationOne
+                        value: 3
                         stepSize: 1
                         Layout.preferredHeight: 20
                         Layout.preferredWidth: 200
@@ -210,6 +213,7 @@ Item {
 
                     Slider {
                         id: sliderFrequencyTwo
+                        value: 392
 
                         maximumValue: 10000
                         Layout.preferredHeight: 20
@@ -222,6 +226,7 @@ Item {
 
                     Slider {
                         id: sliderVolumeTwo
+                        value: 100
 
                         stepSize: 1
                         Layout.preferredHeight: 20
@@ -234,6 +239,7 @@ Item {
 
                     Slider {
                         id: sliderDurationTwo
+                        value: 7
 
                         stepSize: 1
                         Layout.preferredHeight: 20
@@ -348,6 +354,7 @@ Item {
 
                 Slider {
                     id: sliderDiffDuration
+                    value: 1
 
                     stepSize: 1
                     Layout.preferredHeight: 20

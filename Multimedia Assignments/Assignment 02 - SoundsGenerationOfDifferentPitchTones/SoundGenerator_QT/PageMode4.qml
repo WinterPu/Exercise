@@ -87,6 +87,7 @@ Item {
                                 x: 0
                                 y: 66
                                 text: qsTr("Tone 2")
+                                checked: true
                                 onClicked: checkRadioButton(1,2)
                             }
 
@@ -186,6 +187,7 @@ Item {
                                 x: 0
                                 y: 116
                                 text: qsTr("Tone 4")
+                                checked: true
                                 onClicked: checkRadioButton(2,4)
                             }
 

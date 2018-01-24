@@ -40,6 +40,7 @@ Item {
 
             Slider {
                 id: sliderFrequency
+                value: 294
                 stepSize: 1
                 Layout.preferredHeight: 20
                 Layout.preferredWidth: 300
@@ -52,6 +53,7 @@ Item {
 
             Slider {
                 id: sliderVolume
+                value: 100
                 stepSize: 1
                 Layout.preferredHeight: 20
                 Layout.preferredWidth: 300
@@ -63,6 +65,7 @@ Item {
 
             Slider {
                 id: sliderDuration
+                value: 3
                 stepSize: 1
                 Layout.preferredHeight: 20
                 Layout.preferredWidth: 300

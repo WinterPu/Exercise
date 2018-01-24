@@ -8,6 +8,7 @@ Rectangle {
 
     width: 800
     height: 600
+    property alias boxFM: boxFM
     property alias progressBarGeneration: progressBarGeneration
     property alias buttonOutputFilePath: buttonOutputFilePath
     property alias labelOutputStatus: labelOutputStatus

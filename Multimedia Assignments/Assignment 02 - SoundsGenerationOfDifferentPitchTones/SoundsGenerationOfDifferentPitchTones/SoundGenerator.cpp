@@ -143,7 +143,7 @@ WavFile* SoundGenerator::Merge(WavFile* pre, WavFile* rear, int delay_time)
 			WavFile* padding_rear = new WavFile(REST_NOTE_FREQUENCY, DEFAULT_VOLUME, pre->GetDuration() - rear->GetDuration());
 			new_pre = SoundGenerator::Combine(pre, delayed_sound_pre);
 			WavFile* garbage = new_rear;
-			new_rear = SoundGenerator::Combine(rear,padding_rear);
+			new_rear = SoundGenerator::Combine(new_rear,padding_rear);
 			delete garbage;
 		}
 		else if (pre->GetDuration() < rear->GetDuration())
