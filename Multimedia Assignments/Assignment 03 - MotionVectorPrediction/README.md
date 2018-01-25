@@ -5,17 +5,23 @@
 
 #2 2D Logarithm Search
 
-Understanding Parameters:
+### 2.Understanding Parameters:
 
-**N**: num pixels of the macroblocks
+**N**: num of macroblock pixels
+
+Ps: the origin (x,y) of the macroblock is at the upper-left corner [in materials]
 
 **P**: search windows size:(2P-1, 2P+1)
 
+Ps: the origin (x,y) is the center of the search windows
+
 
 #### For example:
-N = 1 : means the macroblocks (m) contains 1 pixel
+**M** is the origin pixel of the macroblock: [image.at(x,y)]
 
-(2P-1,2P+1) means:
+Maybe the macroblock's size is out of the search windows' boundary, it's OK.
+
+**(2P-1,2P+1)** means:
 
 M can move :  
 
@@ -23,20 +29,22 @@ up -- for p pixels , down -- for p pixels
 
 left -- for p pixels, right -- for p pixels
 
-if P =1, it can show as:
+if P =1, the search windows can show:
 
-*   |   *
+@   |   @
 
--   M   -
+--  M   --
 
-*   |   *
+@   |   @
 
-### 2. Note:
+(M is the macroblock's origin,  **@, |, --** is the other pixel in the search windows, **|, ---** just want to show it can move towards this four directions.)
+
+### 3. Note:
 + Ref / Tar Image: the macroblocks start from (0,0)
-+ Each Image has its motion vector
++ Each mage has its motion vector
 + In search windows, each movement is 1 pixel ( not 1 macroblocks (not N))
-+ If (x+i,y+j) out of the boundary, or the macroblock ( whose origin is on (x+i,y+j)) will excceed the image boundary.
-**Turn to the next (i,j) value** 
++ If (x+i,y+j) is out of the boundary, or the macroblock ( whose origin is on (x+i,y+j)) will excceed the image boundary.
+**Turn to the next (i,j) displacement value** 
 
 ## Result Image：
 ### Reference Image:
