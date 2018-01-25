@@ -1,4 +1,4 @@
-# Assignment 03 Motion Vector Prediction Using 2 Algorithms
+# Assignment 03 Motion Vector Prediction
 ## Introduction:
 ### 1.Two Algorithm:
 #1 Sequential Search
