@@ -24,7 +24,9 @@ int main() {
 	std::cout << "Total Consuming Time:" << predictor.GetMethodConsumingTime()<<std::endl;
 	std::cout << "SNR Value:" << predictor.GetSNRValue()<< std::endl << std::endl << std::endl;
 	cv::imshow("Sequential Search Image", predictor.GetPredictedImage());
+	
 	std::vector<int> compression_params;//https://docs.opencv.org/3.0-beta/modules/imgcodecs/doc/reading_and_writing_images.html
+	
 	compression_params.push_back(CV_IMWRITE_PXM_BINARY);
 	compression_params.push_back(1);
 	cv::imwrite(path_name + "Sequential Search Image.pgm", predictor.GetPredictedImage(), compression_params);

@@ -35,16 +35,17 @@ public:
 	// true --- data available
 	// false --- data is not available
 	bool CheckData(int N, int P, cv::Mat ref_image, cv::Mat tar_image);
-	bool CheckPredictorStatus(Status requirement);
 #pragma endregion
 
-
 	void Predict(SearchMethod mode = SEQUENTIAL_SEARCH);
-	cv::Mat GetPredictedImage() { return predicted; }
-
+	
+	inline cv::Mat GetPredictedImage() { return predicted; }
 	inline long GetMethodConsumingTime() { return consuming_time; }
 	inline double GetSNRValue() { return snr_value; }
+
 protected:
+	bool CheckPredictorStatus(Status requirement);
+
 	//[x,y] the origin of the current macroblock (-- upper left corner)
 	//[i,j] the displacements
 	double MAD(int x, int y, int i, int j);
@@ -55,8 +56,8 @@ protected:
 
 	void FindMotionVectors(SearchMethod mode = SEQUENTIAL_SEARCH);
 	void ReconstructImage();
-private:
 
+private:
 	Status status;
 
 	int N; // num pixels in the macroblock

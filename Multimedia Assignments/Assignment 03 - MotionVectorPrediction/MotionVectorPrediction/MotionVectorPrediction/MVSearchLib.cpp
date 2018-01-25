@@ -14,6 +14,7 @@ bool Predictor::Init(int N, int P, cv::Mat ref_image, cv::Mat tar_image)
 	
 	if (!CheckData(N,P,ref_image,tar_image))
 		return false;
+
 	this->N = N;
 	this->P = P;
 	mv_list.clear();
@@ -28,7 +29,6 @@ bool Predictor::Init(int N, int P, cv::Mat ref_image, cv::Mat tar_image)
 }
 
 double  Predictor::MAD(int x, int y, int i, int j) {
-
 	double result = 0;
 	for (int k = 0; k < N; k++)
 	{
@@ -152,6 +152,8 @@ void Predictor::ReconstructImage()
 }
 
 void Predictor::Predict(SearchMethod mode) {
+	if (!CheckPredictorStatus(DATA_READY))
+		return;
 
 clock_t start_time = clock();
 	
