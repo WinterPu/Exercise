@@ -44,6 +44,7 @@ if P =1, the search windows can show:
 + Each mage has its motion vector
 + In search windows, each movement is 1 pixel ( not 1 macroblocks (not N))
 + If (x+i,y+j) is out of the boundary, or the macroblock ( whose origin is on (x+i,y+j)) will excceed the image boundary.
+
 **Turn to the next (i,j) displacement value** 
 
 ## Result Image：
@@ -72,4 +73,4 @@ SNR Value: 106.033
 ## Experience:
 + The program architecture needs to be improved.
 
-(Please respect the right of portraits. Image source comes from the course)
+**(Please respect the right of portraits. Image source comes from the course)**
