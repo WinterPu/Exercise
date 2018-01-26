@@ -69,32 +69,47 @@ MotionVector Predictor::Logarithm2DSearch(int x, int y)
 {
 	double min_mad = MAX_VALUE;
 	MotionVector motionvector;
-	
+
+	// center x, center y [For nine macroblocks]
+	int cx = x;
+	int cy = y;
 	bool last = false;
-	int offset = ceil(P / 2.0);
+	int offset = ceil(P/2.0);
 	MotionVector directions[9] = { {0,0},{0,-1},{0,1},{-1,0},{-1,-1},{-1,1},{1,0},{1,-1},{1,1} };
 	
+	//using [current_motion_vector] [cx,cy]
+	//always find the current (cx,cy) and motion vector in the current time
 	while (!last)
 	{
+		MotionVector current_motion_vector;
 		for (int i = 0; i < 9; i++)
 		{
 			int displacement_i = directions[i].u * offset;
 			int displacement_j = directions[i].v * offset;
 
-			if (!CheckBoundary(x, y) || !CheckBoundary(x + displacement_i, y + displacement_j))
+			if (!CheckBoundary(cx, cy) || !CheckBoundary(cx + displacement_i, cy + displacement_j))
 				continue;
-
-			double current_mad = MAD(x, y, displacement_i, displacement_j);
+			//You have to keep the tar macroblock unchanged. --- to find the most similar block in ref image
+			//so it is *not* MAD[cx,cy,displacement_i,displacement_j]
+			// tar(x,y)[what you want] --- > search ref(different position)
+			double current_mad = MAD(x, y, cx - x + displacement_i, cy - y + displacement_j);
 			if (current_mad < min_mad)
 			{
 				min_mad = current_mad;
-				motionvector.u = displacement_i;
-				motionvector.v = displacement_j;
+				current_motion_vector.u = displacement_i;
+				current_motion_vector.v = displacement_j;
 			}
 		}
 		if (offset == 1)
+		{
+			motionvector.u = current_motion_vector.u + cx - x;
+			motionvector.v = current_motion_vector.v + cy - y;
 			last = true;
-		offset = ceil(offset / 2.0);
+		}
+		offset = ceil(offset/2.0);
+
+		cx = cx+current_motion_vector.u;
+		cy = cy+current_motion_vector.v;
 	}
 
 	return motionvector;

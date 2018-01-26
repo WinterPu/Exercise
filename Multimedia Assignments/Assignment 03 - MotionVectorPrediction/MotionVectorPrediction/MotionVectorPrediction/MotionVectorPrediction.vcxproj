@@ -77,6 +77,10 @@
     <IncludePath>E:\Programming_Tools\OpenCV\opencv\build\include\opencv2;E:\Programming_Tools\OpenCV\opencv\build\include\opencv;E:\Programming_Tools\OpenCV\opencv\build\include;$(IncludePath)</IncludePath>
     <LibraryPath>E:\Programming_Tools\OpenCV\opencv\build\x64\vc14\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>E:\Programming_Tools\OpenCV\opencv\build\include\opencv2;E:\Programming_Tools\OpenCV\opencv\build\include\opencv;E:\Programming_Tools\OpenCV\opencv\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Programming_Tools\OpenCV\opencv\build\x64\vc14\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -123,10 +127,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opencv_world320.dll;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
