@@ -46,7 +46,15 @@ if P =1, the search windows can show:
 + If (x+i,y+j) is out of the boundary, or the macroblock ( whose origin is on (x+i,y+j)) will excceed the image boundary.
 
 **Turn to the next (i,j) displacement value** 
+```
+// in [Logarithm2DSearch] Method
 
+// details in comments
+
+double current_mad = MAD(x, y, cx - x + displacement_i, cy - y + displacement_j);
+
+【not】 MAD cx,cy,displacement_i,displacement_j
+```
 ## Result Image：
 ### Reference Image:
 ![Reference Image](https://github.com/WinterPu/Exercise/blob/master/Multimedia%20Assignments/Assignment%2003%20-%20MotionVectorPrediction/--%20Result%20Images%20--/Reference%20Image.png?raw=true)
@@ -62,15 +70,18 @@ if P =1, the search windows can show:
 ![Evaluation](https://github.com/WinterPu/Exercise/blob/master/Multimedia%20Assignments/Assignment%2003%20-%20MotionVectorPrediction/--%20Result%20Images%20--/Evaluation.png?raw=true)
 
 #### Sequential Search
-Consuming Time： 20691 ms
+Consuming Time： 15903 ms
 
-SNR Value: 183.002
+SNR Value: 183.116
 #### 2D Logarithm Search
-Consuming Time： 871 ms
+Consuming Time： 611 ms
 
-SNR Value: 106.033
+SNR Value: 151.158
 
 ## Experience:
 + The program architecture needs to be improved.
++ **Imwrite -> PGM** with unknown reasons (details in [WritePGMImage] Function) 
 
-**(Please respect the right of portraits. Image source comes from the course)**
+Ref: http://answers.opencv.org/question/73889/access-violation-when-using-imwrite-to-save-an-imagemat/
+
+## Please respect the right of portraits. Image source comes from the course
